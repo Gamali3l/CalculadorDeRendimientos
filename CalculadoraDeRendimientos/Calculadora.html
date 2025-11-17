@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora De Rendimiento</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Calculadora de Rendimiento Para Mquinaria Pesada</h1>
+</header>
+
+<main>
+    <!-- Galería -->
+    <div class="contenedor" id="galeria">
+        <div class="item">
+            <img src="catd7.jpg" alt="CAT D-7">
+            <p class="Nombres">CAT D-7</p>
+        </div>
+        <div class="item">
+            <img src="trailla621g.jpg" alt="MotoTrailla 621G">
+            <p class="Nombres">MotoTrailla 621G</p>
+        </div>
+        <div class="item">
+            <img src="cargador950.jpeg" alt="Cargador Cat-950">
+            <p class="Nombres">Cargador Cat-950</p>
+        </div>
+        <div class="item">
+            <img src="retroexcavadora434.jpeg" alt="Tractor 4">
+        <p class="Nombres">Retroexcavadora 434</p>
+        </div>
+    </div>
+
+    <!-- Calculadora Tractor -->
+    <div id="detalle" class="calculadora" style="display:none;">
+        <h2 id="titulo-modelo"></h2>
+        <div class="modo-selector">
+            <label><input type="radio" name="modo" id="modoMaterial" checked> Material</label>
+            <label><input type="radio" name="modo" id="modoDensidad"> Densidades</label>
+        </div>
+
+        <form id="formularioTractor">
+        <div class="campos">
+            <label for="eficacia">Eficacia (según velocidad m/h):</label>
+            <select id="eficacia">
+                <option value="0.75">45 m/h — 0.75</option>
+                <option value="0.77">46 m/h — 0.77</option>
+                <option value="0.78">47 m/h — 0.78</option>
+                <option value="0.80">48 m/h — 0.80</option>
+                <option value="0.82">49 m/h — 0.82</option>
+                <option value="0.83">50 m/h — 0.83</option>
+                <option value="0.85">51 m/h — 0.85</option>
+                <option value="0.87">52 m/h — 0.87</option>
+                <option value="0.88">53 m/h — 0.88</option>
+                <option value="0.90">54 m/h — 0.90</option>
+                <option value="0.92">55 m/h — 0.92</option>
+            </select>
+        </div>
+            <div class="campos">
+                <label>Ancho de hoja:</label>
+                <div class="modo-selector" id="tipoHojaSelector">
+                    <label><input type="radio" name="tipoHoja" id="hojaRecta" > Recta (6.03 m³)</label>
+                    <label><input type="radio" name="tipoHoja" id="hojaAngular"checked> Angular (5.35 m³)</label>
+                    <!-- Información dinámica del tipo de hoja -->
+                    <div id="infoHoja" class="info-hoja">
+                        <p><b>Largo:</b> 3.65 m</p>
+                        <p><b>Alto:</b> 1.27 m</p>
+                        <p><b>Constante:</b> 1.3 m</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="campos">
+                <label for="anchoUsuario">Ancho usado para cálculo (m):</label>
+                <input type="number" id="anchoUsuario" step="0.01">
+            </div>
+
+            <div class="campos"><label for="distancia">Distancia (m):</label><input type="number" id="distancia" placeholder="Ejemplo: 50"></div>
+            <div class="campos"><label for="pendiente">Pendiente (°):</label><input type="number" id="pendiente" placeholder="Ejemplo: 5"></div>
+            <div class="campos">
+                <label for="marchaAvance">Marcha de Avance:</label>
+                <select id="marchaAvance">
+                    <option value="4">1ra — 4 km/h</option>
+                    <option value="5">2da — 5 km/h</option>
+                    <option value="7">3ra — 7 km/h</option>
+                    <option value="9">4ta — 9 km/h</option>
+                    <option value="12">5ta — 12 km/h</option>
+                </select>
+            </div>
+            <div class="campos">
+                <label for="marchaRetorno">Marcha de Retorno:</label>
+                <select id="marchaRetorno">
+                    <option value="4">1ra — 4 km/h</option>
+                    <option value="5">2da — 5 km/h</option>
+                    <option value="7">3ra — 7 km/h</option>
+                    <option value="9">4ta — 9 km/h</option>
+                    <option value="12">5ta — 12 km/h</option>
+                </select>
+            </div>
+
+            <div class="campos modo-material">
+                
+                <label for="material">Tipo de material:</label>
+                <select id="material">
+                    <option value="1.12">Arena - Grava</option>
+                    <option value="1.16">Capa Vegetal</option>
+                    <option value="1.38">Marga</option>
+                    <option value="1.5">Arcilla Blanda</option>
+                    <option value="1.55">Arcilla Dura</option>
+                    <option value="1.63">Roca Muy Partida</option>
+                    <option value="1.75">Roca Mal Partida</option>
+                </select>
+            </div>
+            <div class="campos modo-densidad" style="display:none;">
+                <label for="densBanco">Densidad banco (t/m³):</label><input type="number" id="densBanco" min="0">
+                <label for="densSuelta">Densidad suelta (t/m³):</label><input type="number" id="densSuelta" min="0">
+            </div>
+        </form>
+        <div class="botones">
+            <button id="calcular">Calcular Rendimiento</button>
+            <button id="volver">Volver a la galería</button>
+        </div>
+        <h3 id="resultado"></h3>
+    </div>
+
+    <!-- Calculadora MotoTrailla -->
+    <div id="detalle-mototrailla" class="calculadora" style="display:none;">
+        <h2 id="titulo-trailla"></h2>
+        <div class="modo-selector">
+            <label><input type="radio" name="modoTrailla" id="modoMaterialT" checked> Material</label>
+            <label><input type="radio" name="modoTrailla" id="modoDensidadT"> Densidades</label>
+        </div>
+        <form id="formularioTrailla">
+            <div class="campos"><label for="marchaAvanceT">Marcha Avance:</label>
+                <select id="marchaAvanceT">
+                    <option value="5.0">1ra — 5.0 km/h</option>
+                    <option value="7.0">2da — 7.0 km/h</option>
+                    <option value="10.0">3ra — 10.0 km/h</option>
+                    <option value="14.0">4ta — 14.0 km/h</option>
+                    <option value="19.0">5ta — 19.0 km/h</option>
+                    <option value="26.0">6ta — 26.0 km/h</option>
+                    <option value="36.0">7ma — 36.0 km/h</option>
+                    <option value="51.0">8va — 51.0 km/h</option>
+                </select>
+            </div>
+            
+            <div class="campos">
+                <label>Capacidad:</label>
+                <div class="modo-selector" id="tipoDeCapacidadSelector">
+                    <label><input type="radio" name="tipoDeCapacidad" id="CapacidadColmada" > colmada (15.3 m³)</label>
+                    <label><input type="radio" name="tipoDeCapacidad" id="CapacidadArras"checked> Arras (10.7 m³)</label> 
+                </div>
+            </div>
+
+            <div class="campos"><label for="marchaRetornoT">Marcha Retorno:</label>
+                <select id="marchaRetornoT">
+                    <option value="5.0">1ra — 5.0 km/h</option>
+                    <option value="7.0">2da — 7.0 km/h</option>
+                    <option value="10.0">3ra — 10.0 km/h</option>
+                    <option value="14.0">4ta — 14.0 km/h</option>
+                    <option value="19.0">5ta — 19.0 km/h</option>
+                    <option value="26.0">6ta — 26.0 km/h</option>
+                    <option value="36.0">7ma — 36.0 km/h</option>
+                    <option value="51.0">8va — 51.0 km/h</option>
+                </select>
+            </div>
+            <div class="campos"><label for="distanciaT">Distancia (m):</label><input type="number" id="distanciaT" placeholder="Ej: 300"></div>
+            <div class="campos"><label for="volumenT">Volumen del proyecto (m³):</label><input type="number" id="volumenT" placeholder="Ej: 5000"></div>
+            <div class="campos">
+                <label for="velCargaT">Velocidad de Carga:</label>
+                <select id="velCargaT">
+                    <option value="5.0">1ra — 5.0 km/h</option>
+                    <option value="7.0">2da — 7.0 km/h</option>
+                    <option value="10.0">3ra — 10.0 km/h</option>
+                    <option value="14.0">4ta — 14.0 km/h</option>
+                    <option value="19.0">5ta — 19.0 km/h</option>
+                    <option value="26.0">6ta — 26.0 km/h</option>
+                    <option value="36.0">7ma — 36.0 km/h</option>
+                    <option value="51.0">8va — 51.0 km/h</option>
+                </select>
+            </div>
+            <div class="campos">
+                <label for="velDescargaT">Velocidad de Descarga:</label>
+                <select id="velDescargaT">
+                    <option value="5.0">1ra — 5.0 km/h</option>
+                    <option value="7.0">2da — 7.0 km/h</option>
+                    <option value="10.0">3ra — 10.0 km/h</option>
+                    <option value="14.0">4ta — 14.0 km/h</option>
+                    <option value="19.0">5ta — 19.0 km/h</option>
+                    <option value="26.0">6ta — 26.0 km/h</option>
+                    <option value="36.0">7ma — 36.0 km/h</option>
+                    <option value="51.0">8va — 51.0 km/h</option>
+                </select>
+            </div>
+            <div class="campos modo-material">
+                <label for="materialT">Tipo de material:</label>
+                <select id="materialT">
+                    <option value="1.12">Arena - Grava</option>
+                    <option value="1.16">Capa Vegetal</option>
+                    <option value="1.38">Marga</option>
+                    <option value="1.5">Arcilla Blanda</option>
+                    <option value="1.55">Arcilla Dura</option>
+                    <option value="1.63">Roca Muy Partida</option>
+                    <option value="1.75">Roca Mal Partida</option>
+                </select>
+            </div>
+            <div class="campos modo-densidad" style="display:none;">
+                <label for="densBancoT">Densidad banco (t/m³):</label><input type="number" id="densBancoT" min="0">
+                <label for="densSueltaT">Densidad suelta (t/m³):</label><input type="number" id="densSueltaT" min="0">
+            </div>
+        </form>
+        <div class="botones">
+            <button id="calcularT">Calcular Rendimiento</button>
+            <button id="volverT">Volver a la galería</button>
+        </div>
+        <h3 id="resultadoT"></h3>
+    </div>
+    <!--CARGADOR-->
+    <div id="detalle-cargador" class="detalle" style="display: none;">
+        <h2 id="titulo-cargador">Calculadora Cargador Cat-950</h2>
+        <div class="modo-selector">
+            <label><input type="radio" name="modo" id="modoMaterialC" checked> Material</label>
+            <label><input type="radio" name="modo" id="modoDensidadC"> Densidades</label>
+        </div>
+        <form id="formularioCargador">
+            <div class="campos">
+                <label for="eficaciaCargador">Eficacia (mi/h):</label>
+                <select id="eficaciaCargador">
+                    <option value="0.75">45 m/h — 0.75</option>
+                    <option value="0.77">46 m/h — 0.77</option>
+                    <option value="0.78">47 m/h — 0.78</option>
+                    <option value="0.80">48 m/h — 0.80</option>
+                    <option value="0.82">49 m/h — 0.82</option>
+                    <option value="0.83">50 m/h — 0.83</option>
+                    <option value="0.85">51 m/h — 0.85</option>
+                    <option value="0.87">52 m/h — 0.87</option>
+                    <option value="0.88">53 m/h — 0.88</option>
+                    <option value="0.90">54 m/h — 0.90</option>
+                    <option value="0.92">55 m/h — 0.92</option>
+                </select>
+            </div>
+            <div class="campos">
+                <label for="anchoUsuarioCargador">Ancho usado para cálculo (m):</label>
+                <input type="number" id="anchoUsuarioCargador" step="0.01">
+            </div>
+
+            <div class="campos"><label for="distancia">Distancia (m):</label><input type="number" id="distanciaCargador" placeholder="Ejemplo: 50"></div>
+            <div class="campos">
+                <label for="marchaAvanceCargador">Marcha de Avance:</label>
+                <select id="marchaAvanceCargador">
+                    <option value="7">1ra — 7 km/h</option>
+                    <option value="12">2da — 12 km/h</option>
+                    <option value="20">3ra — 20 km/h</option>
+                    <option value="26">4ta — 26 km/h</option>
+                    <option value="40">5ta — 40 km/h</option>
+                </select>
+            </div>
+            <div class="campos"><label for="RendimientoTractor1">Rendimineto1 (m^3/h):</label><input type="number" id="RendimientoTractor1" placeholder="Ejemplo: 130.40"></div>
+            <div class="campos"><label for="RendimientoTractor2">Rendimineto2 (m^3/h):</label><input type="number" id="RendimientoTractor2" placeholder="Ejemplo: 130.40"></div>
+            <div class="campos"><label for="RendimientoTractor3">Rendimineto3 (m^3/h):</label><input type="number" id="RendimientoTractor3" placeholder="Ejemplo: 130.40"></div>
+            <div class="campos"><label for="RendimientoTractor4">Rendimineto4 (m^3/h):</label><input type="number" id="RendimientoTractor4" placeholder="Ejemplo: 130.40"></div>
+            <div class="campos">
+                <label for="marchaRetornoCargador">Marcha de Retorno:</label>
+                <select id="marchaRetornoCargador">
+                    <option value="7">1ra — 7 km/h</option>
+                    <option value="12">2da — 12 km/h</option>
+                    <option value="26">3ra — 26 km/h</option>
+                </select>
+            </div>
+
+            <div class="campos modo-material">
+                <label for="materialCargador">Tipo de material:</label>
+                <select id="materialCargador">
+                    <option value="1.12">Arena - Grava</option>
+                    <option value="1.16">Capa Vegetal</option>
+                    <option value="1.38">Marga</option>
+                    <option value="1.5">Arcilla Blanda</option>
+                    <option value="1.55">Arcilla Dura</option>
+                    <option value="1.63">Roca Muy Partida</option>
+                    <option value="1.75">Roca Mal Partida</option>
+                </select>
+            </div>
+            <div class="campos modo-densidad" style="display:none;">
+                <label for="densidadBancoCargador">Densidad banco (t/m³):</label><input type="number" id="densidadBancoCargador" min="0">
+                <label for="densidadSueltaCargador">Densidad suelta (t/m³):</label><input type="number" id="densidadSueltaCargador" min="0">
+            </div>
+        </form>
+        <div class="botones">
+            <button id="calcularCargador">Calcular Rendimiento</button>
+            <button id="volverCargador">Volver a la galería</button>
+        </div>
+        <h3 id="resultadoCargador"></h3>
+        </div>
+    </div>
+
+    <!--RETROEXCAVADORA-->
+    <div id="detalle-retroexcavadora" class="detalle" style="display: none;">
+        <h2 id="titulo-retroexcavadora">Calculadora retroexcavadora 434</h2>
+        <div class="modo-selector">
+            <label><input type="radio" name="modo" id="modoMaterialR" checked> Material</label>
+            <label><input type="radio" name="modo" id="modoDensidadR"> Densidades</label>
+        </div>
+        <form id="formularioRetroexcavadora">
+            <div class="campos">
+                <label for="eficaciaRetroexcavadora">Eficacia (mi/h):</label>
+                <select id="eficaciaRetroexcavadora">
+                    <option value="0.75">45 m/h — 0.75</option>
+                    <option value="0.77">46 m/h — 0.77</option>
+                    <option value="0.78">47 m/h — 0.78</option>
+                    <option value="0.80">48 m/h — 0.80</option>
+                    <option value="0.82">49 m/h — 0.82</option>
+                    <option value="0.83">50 m/h — 0.83</option>
+                    <option value="0.85">51 m/h — 0.85</option>
+                    <option value="0.87">52 m/h — 0.87</option>
+                    <option value="0.88">53 m/h — 0.88</option>
+                    <option value="0.90">54 m/h — 0.90</option>
+                    <option value="0.92">55 m/h — 0.92</option>
+                </select>
+            </div>
+            <div class="campos">
+                <label for="CapacidadRetroexcavadora">Capacidad usada para cálculo (m^3):</label>
+                <input type="number" id="CapacidadRetroexcavadora" step="0.01">
+            </div>
+            <div class="campos"><label for="distancia">Distancia (m):</label><input type="number" id="distanciaRetroexcavadora" placeholder="Ejemplo: 50"></div>
+            <div class="campos">
+                <label for="marchaAvanceRetroexcavadora">Marcha de Avance:</label>
+                <select id="marchaAvanceRetroexcavadora">
+                    <option value="6">1ra — 6 km/h</option>
+                    <option value="9">2da — 9 km/h</option>
+                    <option value="21">3ra — 21 km/h</option>
+                    <option value="40">4ta — 40 km/h</option>
+                </select>
+            </div>
+            <div class="campos">
+                <label for="marchaRetornoRetroexcavadora">Marcha de Retorno:</label>
+                <select id="marchaRetornoRetroexcavadora">
+                    <option value="6">1ra — 6 km/h</option>
+                    <option value="9">2da — 9 km/h</option>
+                    <option value="21">3ra — 21 km/h</option>
+                    <option value="40">4ta — 40 km/h</option>
+                </select>
+            </div>
+
+            <div class="campos modo-material">
+                <label for="materialRetroexcavadora">Tipo de material:</label>
+                <select id="materialRetroexcavadora">
+                    <option value="1.12">Arena - Grava</option>
+                    <option value="1.38">Marga</option>
+                    <option value="1.5">Arcilla Blanda</option>
+                    <option value="1.55">Arcilla Dura</option>
+                    <option value="1.63">Roca Muy Partida</option>
+                    <option value="1.75">Roca Mal Partida</option>
+                </select>
+            </div>
+            <div class="campos modo-densidad" style="display:none;">
+                <label for="densidadBancoRetroexcavadora">Densidad banco (t/m³):</label><input type="number" id="densidadBancoRetroexcavadora" min="0">
+                <label for="densidadSueltaRetroexcavadora">Densidad suelta (t/m³):</label><input type="number" id="densidadSueltaRetroexcavadora" min="0">
+            </div>
+        </form>
+        <div class="botones">
+            <button id="calcularRetroexcavadora">Calcular Rendimiento</button>
+            <button id="volverRetroexcavadora">Volver a la galería</button>
+        </div>
+        <h3 id="resultadoRetroexcavadora"></h3>
+        </div>
+    </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
