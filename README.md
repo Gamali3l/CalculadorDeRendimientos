@@ -1,2 +1,2 @@
 # CalculadorDeRendimientos
-Primera PagWeb
+Descargar la carpeta y ejecutar el index.html
